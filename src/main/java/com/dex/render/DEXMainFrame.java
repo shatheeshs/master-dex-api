@@ -30,6 +30,10 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private void initGUI() {
 
         setDefaultLookAndFeelDecorated(true);
+
+        ImageIcon img = new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\mdex.GIF");
+        this.setIconImage(img.getImage());
+
         this.setLayout(new GridBagLayout());
         mainButtonPanel.setLayout(new GridBagLayout());
 
