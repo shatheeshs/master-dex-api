@@ -12,21 +12,18 @@ public class DEXTabPanel extends JPanel {
 
         //PENDING: Add icons to tabs.
 
-        Component panel1 = makeTextPanel("Blah");
-        //ImageIcon tinyPanel1 = new ImageIcon("tinypanel1.gif");
+        Component panel1 = makeCustomPanel("GET Panel");
+        //ImageIcon tinyPanel1 = new ImageIcon("get.gif");
         tabbedPane.addTab("GET", null, panel1, "Does nothing");
         tabbedPane.setSelectedIndex(0);
 
-        Component panel2 = makeTextPanel("Blah blah");
-        //ImageIcon tinyPanel2 = new ImageIcon("tinypanel2.gif");
+        Component panel2 = makeCustomPanel("POST Panel");
         tabbedPane.addTab("POST", null, panel2, "Does nothing");
 
-        Component panel3 = makeTextPanel("Blah blah blah");
-        //ImageIcon tinyPanel3 = new ImageIcon("tinypanel3.gif");
+        Component panel3 = makeCustomPanel("PUT Panel");
         tabbedPane.addTab("PUT", null, panel3, "Does nothing");
 
-        Component panel4 = makeTextPanel("Blah blah blah blah");
-        //ImageIcon tinyPanel4 = new ImageIcon("tinypanel4.gif");
+        Component panel4 = makeCustomPanel("DELETE Panel");
         tabbedPane.addTab("DELETE", null, panel4, "Does nothing");
 
         //Add the tabbed pane to this panel.
@@ -34,7 +31,7 @@ public class DEXTabPanel extends JPanel {
         add(tabbedPane);
     }
 
-    private Component makeTextPanel(String text) {
+    private Component makeCustomPanel(String text) {
         JPanel panel = new JPanel();
         JLabel filler = new JLabel(text);
         filler.setHorizontalAlignment(JLabel.CENTER);
