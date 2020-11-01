@@ -1,6 +1,12 @@
 package com.dex.render;
 
+import com.dex.client.RestClient;
+import com.dex.component.ProgressBar;
 import com.dex.tabs.GetTab;
+import com.dex.util.DEXThreadPool;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +23,14 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private JPanel mainButtonPanel = new JPanel();
     private JButton executeButton = new JButton("Execute");
     private JButton resetButton = new JButton("Reset");
+    private RestClient restClient;
+    private ProgressBar progressBar;
+    private DEXThreadPool threadPool = new DEXThreadPool();
+
 
     private DEXMainFrame() {
         initGUI();
+        restClient = new RestClient();
     }
 
     public static synchronized DEXMainFrame getInstance() {
@@ -67,8 +78,23 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
             ((GetTab) dexTabPanel.getGetTabPanel()).getGetUrlTextField().setText("");
         }
         if (e.getSource() == executeButton) {
-            ((GetTab) dexTabPanel.getGetTabPanel()).getGetUrlTextField().setText("");
+
+            progressBar = new ProgressBar(this, restClient, "ss");
+            progressBar.startTask();
+            ((GetTab) dexTabPanel.getGetTabPanel()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(progressBar.getResponse()));
         }
+    }
+
+    /**
+     * Get pretty print JSON
+     *
+     * @param res string
+     * @return string
+     */
+    private String getPrettyPrintJson(String res) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        return gson.toJson(jp.parse(res));
     }
 
     @Override

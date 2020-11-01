@@ -34,31 +34,16 @@ public class DEXTabPanel extends JPanel {
         return getTabPanel;
     }
 
-    public void setGetTabPanel(JPanel getTabPanel) {
-        this.getTabPanel = getTabPanel;
-    }
-
     public JPanel getPostTabPanel() {
         return postTabPanel;
-    }
-
-    public void setPostTabPanel(JPanel postTabPanel) {
-        this.postTabPanel = postTabPanel;
     }
 
     public JPanel getPutTabPanel() {
         return putTabPanel;
     }
 
-    public void setPutTabPanel(JPanel putTabPanel) {
-        this.putTabPanel = putTabPanel;
-    }
-
     public JPanel getDeleteTabPanel() {
         return deleteTabPanel;
     }
 
-    public void setDeleteTabPanel(JPanel deleteTabPanel) {
-        this.deleteTabPanel = deleteTabPanel;
-    }
 }
