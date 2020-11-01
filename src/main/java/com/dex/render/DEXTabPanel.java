@@ -10,36 +10,55 @@ import java.awt.*;
 
 public class DEXTabPanel extends JPanel {
 
-    JTabbedPane tabbedPane = new JTabbedPane();
+    private JTabbedPane tabbedPane = new JTabbedPane();
+    private JPanel getTabPanel = new GetTab();
+    private JPanel postTabPanel = new PostTab();
+    private JPanel putTabPanel = new PutTab();
+    private JPanel deleteTabPanel = new DeleteTab();
 
     public DEXTabPanel() {
         super(true);
 
-
-        JPanel panel1 = new GetTab();
-        tabbedPane.addTab("GET", null, panel1, "GET Request Testing");
+        tabbedPane.addTab("GET", null, getTabPanel, "GET Request Testing");
         tabbedPane.setSelectedIndex(0);
-
-        Component panel2 = new PostTab();
-        tabbedPane.addTab("POST", null, panel2, "Does nothing");
-
-        Component panel3 = new PutTab();
-        tabbedPane.addTab("PUT", null, panel3, "Does nothing");
-
-        Component panel4 = new DeleteTab();
-        tabbedPane.addTab("DELETE", null, panel4, "Does nothing");
+        tabbedPane.addTab("POST", null, postTabPanel, "Does nothing");
+        tabbedPane.addTab("PUT", null, putTabPanel, "Does nothing");
+        tabbedPane.addTab("DELETE", null, deleteTabPanel, "Does nothing");
 
         //Add the tabbed pane to this panel.
         setLayout(new GridLayout(1, 0));
         add(tabbedPane);
     }
 
-    private Component makeCustomPanel(String text) {
-        JPanel panel = new JPanel();
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 0));
-        panel.add(filler);
-        return panel;
+    public JPanel getGetTabPanel() {
+        return getTabPanel;
+    }
+
+    public void setGetTabPanel(JPanel getTabPanel) {
+        this.getTabPanel = getTabPanel;
+    }
+
+    public JPanel getPostTabPanel() {
+        return postTabPanel;
+    }
+
+    public void setPostTabPanel(JPanel postTabPanel) {
+        this.postTabPanel = postTabPanel;
+    }
+
+    public JPanel getPutTabPanel() {
+        return putTabPanel;
+    }
+
+    public void setPutTabPanel(JPanel putTabPanel) {
+        this.putTabPanel = putTabPanel;
+    }
+
+    public JPanel getDeleteTabPanel() {
+        return deleteTabPanel;
+    }
+
+    public void setDeleteTabPanel(JPanel deleteTabPanel) {
+        this.deleteTabPanel = deleteTabPanel;
     }
 }

@@ -1,5 +1,7 @@
 package com.dex.render;
 
+import com.dex.tabs.GetTab;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,24 +31,30 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
 
     private void initGUI() {
 
+        //LookAndFeel
         setDefaultLookAndFeelDecorated(true);
-
-        ImageIcon img = new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\mdex.GIF");
-        this.setIconImage(img.getImage());
-
-        this.setLayout(new GridBagLayout());
-        mainButtonPanel.setLayout(new GridBagLayout());
-
         this.setTitle("MasterDEX");
         this.setSize(1000, 600);
 
-        this.add(dexTabPanel, new GridBagConstraints(1,0, 1, 1 ,1,10, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0) , 0, 0));
+        //Set Main Icon
+        ImageIcon img = new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\mdex.GIF");
+        this.setIconImage(img.getImage());
 
-        mainButtonPanel.add(resetButton , new GridBagConstraints(0,0, 1, 1 ,10,1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0,0,0,0) , 50, 0));
-        mainButtonPanel.add(executeButton , new GridBagConstraints(1,0, 1, 1 ,0.2,1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0,0,0,5) , 40, 0));
-        this.add(mainButtonPanel, new GridBagConstraints(1,1, 1, 1 ,1,0.1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0) , 0, 0));
+        //Layout Definitions
+        this.setLayout(new GridBagLayout());
+        mainButtonPanel.setLayout(new GridBagLayout());
 
+        //Add Main Panels
+        this.add(dexTabPanel, new GridBagConstraints(1, 0, 1, 1, 1, 10, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        mainButtonPanel.add(resetButton, new GridBagConstraints(0, 0, 1, 1, 10, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 50, 0));
+        mainButtonPanel.add(executeButton, new GridBagConstraints(1, 0, 1, 1, 0.2, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 5), 40, 0));
+        this.add(mainButtonPanel, new GridBagConstraints(1, 1, 1, 1, 1, 0.1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+
+        //Add Listeners
         this.addWindowListener(this);
+        resetButton.addActionListener(this);
+        executeButton.addActionListener(this);
+
         //Display the window.
         this.setVisible(true);
     }
@@ -55,8 +63,11 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == "SS") {
-            System.out.println("asfaf");
+        if (e.getSource() == resetButton) {
+            ((GetTab) dexTabPanel.getGetTabPanel()).getGetUrlTextField().setText("");
+        }
+        if (e.getSource() == executeButton) {
+            ((GetTab) dexTabPanel.getGetTabPanel()).getGetUrlTextField().setText("");
         }
     }
 
