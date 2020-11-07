@@ -3,7 +3,6 @@ package com.dex.component;
 import com.dex.client.Client;
 import com.dex.util.Constants;
 
-import javax.swing.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,18 +10,15 @@ import java.util.concurrent.Future;
 
 public class DEXExecutor {
 
-    private static final int BAR_MINIMUM = 0;
-    private static final int BAR_MAXIMUM = 100;
-    private JProgressBar pbar = new JProgressBar(BAR_MINIMUM, BAR_MAXIMUM);
     private Client client;
     private String requestBody;
+    private String url;
     private String response;
     private int operation;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public DEXExecutor(Client client, String requestBody, int operation) {
+    public DEXExecutor(Client client, int operation) {
         this.client = client;
-        this.requestBody = requestBody;
         this.operation = operation;
     }
 
@@ -32,16 +28,16 @@ public class DEXExecutor {
             public String call() throws Exception {
 
                 if (Constants.GET_TAB == operation) {
-                    return client.sendGetRequest(requestBody);
+                    return client.sendGetRequest(url, requestBody);
                 }
                 if (Constants.POST_TAB == operation) {
-                    return client.sendPostRequest(requestBody);
+                    return client.sendPostRequest(url, requestBody);
                 }
                 if (Constants.PUT_TAB == operation) {
-                    return client.sendPutRequest(requestBody);
+                    return client.sendPutRequest(url, requestBody);
                 }
                 if (Constants.DELETE_TAB == operation) {
-                    return client.sendDeleteRequest(requestBody);
+                    return client.sendDeleteRequest(url, requestBody);
                 }
                 return null;
             }
@@ -62,4 +58,14 @@ public class DEXExecutor {
     public void setOperation(int operation) {
         this.operation = operation;
     }
+
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
 }

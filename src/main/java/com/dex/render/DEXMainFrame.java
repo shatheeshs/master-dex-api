@@ -33,7 +33,7 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private DEXMainFrame() {
         initGUI();
         restClient = new RestClient();
-        dexExecutor = new DEXExecutor(restClient, "", 0);
+        dexExecutor = new DEXExecutor(restClient, 0);
     }
 
     public static synchronized DEXMainFrame getInstance() {
@@ -57,12 +57,13 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
         //Layout Definitions
         this.setLayout(new GridBagLayout());
         mainButtonPanel.setLayout(new GridBagLayout());
+        mainButtonPanel.add(resetButton, new GridBagConstraints(0, 0, 1, 1, 10, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(3, 0, 3, 0), 50, 0));
+        mainButtonPanel.add(executeButton, new GridBagConstraints(1, 0, 1, 1, 0.2, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(3, 0, 3, 3), 40, 0));
+
 
         //Add Main Panels
-        this.add(dexTabPanel, new GridBagConstraints(1, 0, 1, 1, 1, 10, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        mainButtonPanel.add(resetButton, new GridBagConstraints(0, 0, 1, 1, 10, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 0), 50, 0));
-        mainButtonPanel.add(executeButton, new GridBagConstraints(1, 0, 1, 1, 0.2, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(0, 0, 0, 5), 40, 0));
-        this.add(mainButtonPanel, new GridBagConstraints(1, 1, 1, 1, 1, 0.1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(dexTabPanel, new GridBagConstraints(0, 0, 1, 1, 1, 10, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        this.add(mainButtonPanel, new GridBagConstraints(0, 1, 1, 1, 1, 0.05, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
         //Add Listeners
         this.addWindowListener(this);
@@ -86,9 +87,10 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
         if (e.getSource() == executeButton) {
 
             dexExecutor.setOperation(dexTabPanel.getSelectedIndex());
+            dexExecutor.setUrl(((AbstractTab) dexTabPanel.getSelectedTab()).getUrlTextField().getText());
+            dexExecutor.setRequestBody(((AbstractTab) dexTabPanel.getSelectedTab()).getRequestPane().getRequestTextArea().getText());
             dexExecutor.startTask();
             String response = dexExecutor.getResponse();
-
             if (response != null) {
                 ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response));
             }

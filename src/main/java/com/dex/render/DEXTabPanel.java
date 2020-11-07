@@ -66,10 +66,10 @@ public class DEXTabPanel extends JPanel {
                 selectedPanel = postTabPanel;
                 break;
             case Constants.PUT_TAB:
-                selectedPanel = deleteTabPanel;
+                selectedPanel = putTabPanel;
                 break;
             case Constants.DELETE_TAB:
-                selectedPanel = getTabPanel;
+                selectedPanel = deleteTabPanel;
                 break;
         }
         return selectedPanel;

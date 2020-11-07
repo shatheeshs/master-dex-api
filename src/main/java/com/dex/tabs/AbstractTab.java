@@ -49,5 +49,7 @@ public abstract class AbstractTab extends JPanel {
         return responsePane;
     }
 
-
+    public RequestPane getRequestPane() {
+        return requestPane;
+    }
 }
