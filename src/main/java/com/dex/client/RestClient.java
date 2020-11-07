@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class RestClient implements Client {
 
-
+    @Override
     public String sendGetRequest(String getUrl) {
         String output = "";
         try {
@@ -40,4 +40,8 @@ public class RestClient implements Client {
         return output;
     }
 
+    @Override
+    public String sendPostRequest(String putUrl) {
+        return null;
+    }
 }
