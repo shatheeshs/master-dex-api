@@ -15,7 +15,6 @@ public class RestClient implements Client {
         String output = "";
         try {
 
-            getUrl = "https://reqres.in/api/users?page=2";
             URL url = new URL(getUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(Constants.GET_METHOD);
