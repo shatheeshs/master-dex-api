@@ -66,6 +66,9 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
         resetButton.addActionListener(this);
         executeButton.addActionListener(this);
 
+        this.setResizable(false);
+
+        pack();
         //Display the window.
         this.setVisible(true);
     }

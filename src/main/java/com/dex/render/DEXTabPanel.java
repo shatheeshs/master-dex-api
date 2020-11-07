@@ -4,6 +4,7 @@ import com.dex.tabs.DeleteTab;
 import com.dex.tabs.GetTab;
 import com.dex.tabs.PostTab;
 import com.dex.tabs.PutTab;
+import com.dex.util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class DEXTabPanel extends JPanel {
     public DEXTabPanel() {
         super(true);
 
-        tabbedPane.addTab("GET", null, getTabPanel, "GET Request Testing");
+        tabbedPane.addTab(Constants.GET_METHOD, null, getTabPanel, "GET Request Testing");
         tabbedPane.setSelectedIndex(0);
         tabbedPane.addTab("POST", null, postTabPanel, "Does nothing");
         tabbedPane.addTab("PUT", null, putTabPanel, "Does nothing");
