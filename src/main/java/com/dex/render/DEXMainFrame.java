@@ -1,9 +1,10 @@
 package com.dex.render;
 
 import com.dex.client.RestClient;
-import com.dex.component.ProgressBar;
-import com.dex.tabs.GetTab;
-import com.dex.util.DEXThreadPool;
+import com.dex.component.DEXExecutor;
+import com.dex.tabs.AbstractTab;
+import com.dex.util.Constants;
+import com.dex.util.JsonUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -15,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import static javax.swing.JOptionPane.DEFAULT_OPTION;
+
 public class DEXMainFrame extends JFrame implements ActionListener, WindowListener {
 
 
@@ -24,13 +27,13 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private JButton executeButton = new JButton("Execute");
     private JButton resetButton = new JButton("Reset");
     private RestClient restClient;
-    private ProgressBar progressBar;
-    private DEXThreadPool threadPool = new DEXThreadPool();
+    private DEXExecutor dexExecutor;
 
 
     private DEXMainFrame() {
         initGUI();
         restClient = new RestClient();
+        dexExecutor = new DEXExecutor(restClient, "", 0);
     }
 
     public static synchronized DEXMainFrame getInstance() {
@@ -78,13 +81,17 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == resetButton) {
-            ((GetTab) dexTabPanel.getGetTabPanel()).getGetUrlTextField().setText("");
+            ((AbstractTab) dexTabPanel.getSelectedTab()).getUrlTextField().setText("");
         }
         if (e.getSource() == executeButton) {
 
-            progressBar = new ProgressBar(this, restClient, "ss");
-            progressBar.startTask();
-            ((GetTab) dexTabPanel.getGetTabPanel()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(progressBar.getResponse()));
+            dexExecutor.setOperation(dexTabPanel.getSelectedIndex());
+            dexExecutor.startTask();
+            String response = dexExecutor.getResponse();
+
+            if (response != null) {
+                ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response));
+            }
         }
     }
 
@@ -95,9 +102,23 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
      * @return string
      */
     private String getPrettyPrintJson(String res) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser jp = new JsonParser();
-        return gson.toJson(jp.parse(res));
+
+        String ex;
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            if (JsonUtil.isValidJSON(res)) {
+                return gson.toJson(jp.parse(res));
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Json from API end point", Constants.JSON_VALIDATION_ERROR, DEFAULT_OPTION);
+                return Constants.EMPTY;
+            }
+        } catch (Exception e) {
+            ex = e.getMessage();
+            JOptionPane.showMessageDialog(null, "Invalid Json from API end point", Constants.JSON_VALIDATION_ERROR, DEFAULT_OPTION);
+        }
+        return ex;
     }
 
     @Override

@@ -1,16 +1,10 @@
 package com.dex.tabs;
 
-import javax.swing.*;
-import java.awt.*;
+import com.dex.util.Constants;
 
-public class PostTab extends JPanel{
-
-    private JLabel filler = new JLabel("POST");
-
+public class PostTab extends AbstractTab {
 
     public PostTab() {
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        this.setLayout(new GridLayout(1, 0));
-        this.add(filler);
+        super(Constants.POST_METHOD);
     }
 }

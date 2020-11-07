@@ -47,4 +47,31 @@ public class DEXTabPanel extends JPanel {
         return deleteTabPanel;
     }
 
+    public int getSelectedIndex() {
+        return tabbedPane.getSelectedIndex();
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        this.tabbedPane.setSelectedIndex(selectedIndex);
+    }
+
+    public JPanel getSelectedTab() {
+
+        JPanel selectedPanel = null;
+        switch (tabbedPane.getSelectedIndex()) {
+            case Constants.GET_TAB:
+                selectedPanel = getTabPanel;
+                break;
+            case Constants.POST_TAB:
+                selectedPanel = postTabPanel;
+                break;
+            case Constants.PUT_TAB:
+                selectedPanel = deleteTabPanel;
+                break;
+            case Constants.DELETE_TAB:
+                selectedPanel = getTabPanel;
+                break;
+        }
+        return selectedPanel;
+    }
 }

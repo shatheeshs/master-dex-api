@@ -29,7 +29,6 @@ public class RestClient implements Client {
                     (conn.getInputStream())));
 
             output = org.apache.commons.io.IOUtils.toString(br);
-            System.out.println("Output from Server .... \n");
             conn.disconnect();
 
         } catch (Exception e) {
@@ -42,6 +41,16 @@ public class RestClient implements Client {
 
     @Override
     public String sendPostRequest(String putUrl) {
+        return null;
+    }
+
+    @Override
+    public String sendPutRequest(String putUrl) {
+        return null;
+    }
+
+    @Override
+    public String sendDeleteRequest(String deleteUrl) {
         return null;
     }
 }
