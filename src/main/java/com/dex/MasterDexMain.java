@@ -6,6 +6,7 @@ public class MasterDexMain {
     public static void main(String[] args) {
 
         DEXMainFrame dexMainFrame = DEXMainFrame.getInstance();
+        dexMainFrame.init();
 
 
     }

@@ -14,4 +14,6 @@ public class Constants {
     public static final int POST_TAB = 1;
     public static final int PUT_TAB = 2;
     public static final int DELETE_TAB = 3;
+    public static final int SUCCESS = 1000;
+    public static final int ERROR = 2000;
 }

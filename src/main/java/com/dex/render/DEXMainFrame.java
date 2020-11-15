@@ -1,9 +1,11 @@
 package com.dex.render;
 
 import com.dex.client.RestClient;
+import com.dex.component.DEXButton;
 import com.dex.component.DEXExecutor;
 import com.dex.tabs.AbstractTab;
 import com.dex.util.Constants;
+import com.dex.util.DEXDataResponse;
 import com.dex.util.JsonUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,14 +26,18 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private static DEXMainFrame DEXMainFrameInstance;
     private DEXTabPanel dexTabPanel = new DEXTabPanel();
     private JPanel mainButtonPanel = new JPanel();
-    private JButton executeButton = new JButton("Execute");
-    private JButton resetButton = new JButton("Reset");
+    //    private JButton executeButton = new JButton("Execute");
+    private DEXButton executeButton = new DEXButton(new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\execute_default.png"));
+    private DEXButton resetButton = new DEXButton(new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\reset_default.png"));
     private RestClient restClient;
     private DEXExecutor dexExecutor;
 
 
     private DEXMainFrame() {
         initGUI();
+    }
+
+    public void init() {
         restClient = new RestClient();
         dexExecutor = new DEXExecutor(restClient, 0);
     }
@@ -58,7 +64,7 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
         this.setLayout(new GridBagLayout());
         mainButtonPanel.setLayout(new GridBagLayout());
         mainButtonPanel.add(resetButton, new GridBagConstraints(0, 0, 1, 1, 10, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(3, 0, 3, 0), 50, 0));
-        mainButtonPanel.add(executeButton, new GridBagConstraints(1, 0, 1, 1, 0.2, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(3, 0, 3, 3), 40, 0));
+        mainButtonPanel.add(executeButton, new GridBagConstraints(1, 0, 1, 1, 0.2, 1, GridBagConstraints.EAST, GridBagConstraints.VERTICAL, new Insets(3, 0, 3, 12), 40, 0));
 
 
         //Add Main Panels
@@ -89,10 +95,15 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
             dexExecutor.setOperation(dexTabPanel.getSelectedIndex());
             dexExecutor.setUrl(((AbstractTab) dexTabPanel.getSelectedTab()).getUrlTextField().getText());
             dexExecutor.setRequestBody(((AbstractTab) dexTabPanel.getSelectedTab()).getRequestPane().getRequestTextArea().getText());
-            dexExecutor.startTask();
-            String response = dexExecutor.getResponse();
+            DEXDataResponse<String> response = dexExecutor.startTask();
             if (response != null) {
-                ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response));
+
+                if (!response._isSuccess()) {
+                    ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().setResponseColour(Color.RED);
+                } else {
+                    ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().setResponseColour(Color.BLACK);
+                }
+                ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response.getReturnData()));
             }
         }
     }

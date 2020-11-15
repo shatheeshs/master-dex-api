@@ -1,6 +1,7 @@
 package com.dex.client;
 
 import com.dex.util.Constants;
+import com.dex.util.DEXDataResponse;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,8 +12,8 @@ import java.net.URL;
 public class RestClient implements Client {
 
     @Override
-    public String sendGetRequest(String getUrl , String reqBody ) {
-        String output = "";
+    public DEXDataResponse<String> sendGetRequest(String getUrl, String reqBody) {
+        DEXDataResponse<String> response = new DEXDataResponse<>("GET Client Error", Constants.ERROR);
         try {
 
             URL url = new URL(getUrl);
@@ -28,20 +29,22 @@ public class RestClient implements Client {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            output = org.apache.commons.io.IOUtils.toString(br);
+            response.setReturnData(org.apache.commons.io.IOUtils.toString(br));
+            response.setStatus(Constants.SUCCESS);
             conn.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
-
+            response.setReturnData(e.toString());
         }
-        return output;
+        return response;
     }
 
     @Override
-    public String sendPostRequest(String postUrl, String reqBody) {
+    public DEXDataResponse<String> sendPostRequest(String postUrl, String reqBody) {
 
-        String output = "";
+        DEXDataResponse<String> response = new DEXDataResponse<>("POST Client Error", Constants.ERROR);
+
         try {
 
             URL obj = new URL(postUrl);
@@ -63,19 +66,21 @@ public class RestClient implements Client {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            output = org.apache.commons.io.IOUtils.toString(br);
-            conn.disconnect();
+            response.setReturnData(org.apache.commons.io.IOUtils.toString(br));
+            response.setStatus(Constants.SUCCESS);
 
         } catch (Exception e) {
             e.printStackTrace();
+            response.setReturnData(e.toString());
         }
 
-        return output;
+        return response;
     }
 
     @Override
-    public String sendPutRequest(String putUrl , String reqBody ) {
-        String output = "";
+    public DEXDataResponse<String> sendPutRequest(String putUrl, String reqBody) {
+
+        DEXDataResponse<String> response = new DEXDataResponse<>("PUT Client Error", Constants.ERROR);
         try {
 
             URL obj = new URL(putUrl);
@@ -97,20 +102,21 @@ public class RestClient implements Client {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            output = org.apache.commons.io.IOUtils.toString(br);
-            conn.disconnect();
+            response.setReturnData(org.apache.commons.io.IOUtils.toString(br));
+            response.setStatus(Constants.SUCCESS);
 
         } catch (Exception e) {
             e.printStackTrace();
+            response.setReturnData(e.toString());
         }
 
-        return output;
+        return response;
     }
 
     @Override
-    public String sendDeleteRequest(String deleteUrl , String reqBody) {
+    public DEXDataResponse<String> sendDeleteRequest(String deleteUrl, String reqBody) {
 
-        String output = "";
+        DEXDataResponse<String> response = new DEXDataResponse<>("DELETE Client Error", Constants.ERROR);
         try {
 
             URL obj = new URL(deleteUrl);
@@ -132,13 +138,14 @@ public class RestClient implements Client {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            output = org.apache.commons.io.IOUtils.toString(br);
-            conn.disconnect();
+            response.setReturnData(org.apache.commons.io.IOUtils.toString(br));
+            response.setStatus(Constants.SUCCESS);
 
         } catch (Exception e) {
             e.printStackTrace();
+            response.setReturnData(e.toString());
         }
 
-        return output;
+        return response;
     }
 }
