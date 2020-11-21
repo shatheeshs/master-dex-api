@@ -22,9 +22,9 @@ public class DEXTabPanel extends JPanel {
 
         tabbedPane.addTab(Constants.GET_METHOD, null, getTabPanel, "GET Request Testing");
         tabbedPane.setSelectedIndex(0);
-        tabbedPane.addTab("POST", null, postTabPanel, "Does nothing");
-        tabbedPane.addTab("PUT", null, putTabPanel, "Does nothing");
-        tabbedPane.addTab("DELETE", null, deleteTabPanel, "Does nothing");
+        tabbedPane.addTab("POST", null, postTabPanel, "POST Request Testing");
+        tabbedPane.addTab("PUT", null, putTabPanel, "PUT Request Testing");
+        tabbedPane.addTab("DELETE", null, deleteTabPanel, "DELETE Request Testing");
 
         //Add the tabbed pane to this panel.
         setLayout(new GridLayout(1, 0));
