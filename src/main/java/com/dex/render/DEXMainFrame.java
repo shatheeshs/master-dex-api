@@ -27,8 +27,8 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
     private DEXTabPanel dexTabPanel = new DEXTabPanel();
     private JPanel mainButtonPanel = new JPanel();
     //    private JButton executeButton = new JButton("Execute");
-    private DEXButton executeButton = new DEXButton(new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\execute_default.png"));
-    private DEXButton resetButton = new DEXButton(new ImageIcon("F:\\Java\\masterdex\\src\\main\\resources\\reset_default.png"));
+    private DEXButton executeButton = new DEXButton("Execute");
+    private DEXButton resetButton = new DEXButton("Reset");
     private RestClient restClient;
     private DEXExecutor dexExecutor;
 
@@ -100,10 +100,11 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
 
                 if (!response._isSuccess()) {
                     ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().setResponseColour(Color.RED);
+                    JOptionPane.showMessageDialog(null, "Please check end-point url.", Constants.INVALID_URL, DEFAULT_OPTION);
                 } else {
                     ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().setResponseColour(Color.BLACK);
+                    ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response.getReturnData()));
                 }
-                ((AbstractTab) dexTabPanel.getSelectedTab()).getResponsePane().getResponseTextArea().setText(getPrettyPrintJson(response.getReturnData()));
             }
         }
     }
@@ -128,8 +129,8 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
                 return Constants.EMPTY;
             }
         } catch (Exception e) {
-            ex = e.getMessage();
-            JOptionPane.showMessageDialog(null, "Invalid Json from API end point", Constants.JSON_VALIDATION_ERROR, DEFAULT_OPTION);
+            ex = res;
+            JOptionPane.showMessageDialog(null, "This content has no JSON response.But we are showing it.", Constants.JSON_VALIDATION_ERROR, DEFAULT_OPTION);
         }
         return ex;
     }

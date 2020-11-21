@@ -5,6 +5,6 @@ import com.dex.util.Constants;
 public class PostTab extends AbstractTab {
 
     public PostTab() {
-        super(Constants.POST_METHOD);
+        super(Constants.URL_TEXT);
     }
 }

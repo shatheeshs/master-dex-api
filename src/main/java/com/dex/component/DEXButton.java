@@ -9,11 +9,20 @@ public class DEXButton extends JButton implements MouseListener {
 
     public DEXButton(Icon icon) {
         super(icon);
-        initGUI();
+        initGUIForImageButton();
     }
 
-    private void initGUI() {
-        this.setPreferredSize(new Dimension(58, 45));
+    public DEXButton(String title) {
+        super(title);
+        initGUIForNormal();
+    }
+    private void initGUIForNormal() {
+        this.setPreferredSize(new Dimension(58, 25));
+        this.addMouseListener(this);
+    }
+
+    private void initGUIForImageButton() {
+        this.setPreferredSize(new Dimension(58, 25));
         this.setFocusPainted(false);
         this.setRolloverEnabled(false);
         this.setOpaque(false);

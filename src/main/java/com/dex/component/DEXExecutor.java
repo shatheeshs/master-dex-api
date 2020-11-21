@@ -1,6 +1,7 @@
 package com.dex.component;
 
 import com.dex.client.Client;
+import com.dex.util.CommonUtil;
 import com.dex.util.Constants;
 import com.dex.util.DEXDataResponse;
 
@@ -29,19 +30,21 @@ public class DEXExecutor {
             Future<DEXDataResponse<String>> result = executor.submit(new Callable<DEXDataResponse<String>>() {
                 public DEXDataResponse<String> call() throws Exception {
 
-                    if (Constants.GET_TAB == operation) {
-                        return client.sendGetRequest(url, requestBody);
+                    if (CommonUtil.isUrlValid(url)) {
+                        if (Constants.GET_TAB == operation) {
+                            return client.sendGetRequest(url, requestBody);
+                        }
+                        if (Constants.POST_TAB == operation) {
+                            return client.sendPostRequest(url, requestBody);
+                        }
+                        if (Constants.PUT_TAB == operation) {
+                            return client.sendPutRequest(url, requestBody);
+                        }
+                        if (Constants.DELETE_TAB == operation) {
+                            return client.sendDeleteRequest(url, requestBody);
+                        }
                     }
-                    if (Constants.POST_TAB == operation) {
-                        return client.sendPostRequest(url, requestBody);
-                    }
-                    if (Constants.PUT_TAB == operation) {
-                        return client.sendPutRequest(url, requestBody);
-                    }
-                    if (Constants.DELETE_TAB == operation) {
-                        return client.sendDeleteRequest(url, requestBody);
-                    }
-                    return null;
+                    return new DEXDataResponse<>(Constants.INVALID_URL, Constants.ERROR);
                 }
             });
 
