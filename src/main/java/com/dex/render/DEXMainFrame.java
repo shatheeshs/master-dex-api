@@ -53,7 +53,6 @@ public class DEXMainFrame extends JFrame implements ActionListener, WindowListen
 
         //LookAndFeel
         setDefaultLookAndFeelDecorated(true);
-        this.setTitle("MasterDEX");
         this.setSize(1000, 600);
 
         //Set Main Icon

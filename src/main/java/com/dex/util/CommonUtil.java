@@ -21,4 +21,11 @@ public class CommonUtil {
             return false;
         }
     }
+
+    public static boolean isEmptyOrNullString(String str) {
+        if (str == null || str.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
 }
